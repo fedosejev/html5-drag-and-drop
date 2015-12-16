@@ -3,6 +3,7 @@
 document.addEventListener('DOMContentLoaded', function handleDOMContentLoaded() {
   var dropZoneElement = document.querySelector('[data-drop-zone]');
   dropZoneElement.addEventListener('dragover', handleDragOver, false);
+  dropZoneElement.addEventListener('dragleave', handleDragLeave, false);
   dropZoneElement.addEventListener('drop', handleDrop, false);
   
   var draggableElements = document.querySelectorAll('[draggable]');
@@ -11,8 +12,6 @@ document.addEventListener('DOMContentLoaded', function handleDOMContentLoaded() 
   Array.prototype.forEach.call(draggableElements, function (element) {
     element.addEventListener('dragstart', handleDragStart, false);
     element.addEventListener('dragenter', handleDragEnter, false);
-    element.addEventListener('dragover', handleDragOver, false);
-    element.addEventListener('dragleave', handleDragLeave, false);
     element.addEventListener('dragend', handleDragEnd, false);
   });
 });
@@ -23,6 +22,12 @@ function handleDragEnter(dragEnterEvent) {
 
 function handleDragLeave(dragLeaveEvent) {
   console.log('dragleave');
+
+  dragLeaveEvent.target.classList.remove('highlight');
+}
+
+function unhighlight(element) {
+  element.classList.remove('highlight');
 }
 
 function handleDrop(dropEvent) {
@@ -33,14 +38,18 @@ function handleDrop(dropEvent) {
   var sum = parseInt(currentSum, 10) + parseInt(data, 10);
 
   dropEvent.target.innerHTML = '£' + sum;
+
+  unhighlight(dropEvent.target);
   
   dropEvent.preventDefault();
 }
 
 function handleDragStart(dragStartEvent) {
   console.log('dragstart');
+
+  var price = dragStartEvent.target.getAttribute('data-price');
     
-  dragStartEvent.dataTransfer.setData('text/plain', dragStartEvent.target.getAttribute('data-price'));
+  dragStartEvent.dataTransfer.setData('text/plain', price);
   dragStartEvent.target.classList.add('dragging');
 }
 
@@ -53,6 +62,8 @@ function handleDragEnd(dragEndEvent) {
 function handleDragOver(dragOverEvent) {
   console.log('dragover');
   
+  dragOverEvent.target.classList.add('highlight');
+
   dragOverEvent.stopPropagation();
   dragOverEvent.preventDefault();
 }

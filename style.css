@@ -47,3 +47,7 @@
 .dragging {
   background-color: red;
 }
+
+.highlight {
+  border-color: red;
+}
