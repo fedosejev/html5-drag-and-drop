@@ -3,5 +3,6 @@
 git checkout master
 git add .
 git commit -m "Update"
-git merge gh-pages
+git checkout gh-pages
+git merge master
 git push
