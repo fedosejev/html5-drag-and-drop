@@ -6,6 +6,6 @@ Example of native HTML5 drag and drop.
 
 http://fedosejev.github.io/html5-drag-and-drop/
 
-## References
+## Learn more
 
 + http://www.html5rocks.com/en/tutorials/dnd/basics/
